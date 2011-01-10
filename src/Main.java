@@ -36,7 +36,7 @@ public class Main {
 		try{
 			double sum = 0;
 			double total = 0;
-			Scanner s = new Scanner(new File("car.train"));
+			Scanner s = new Scanner(new File("car.test"));
 			while(s.hasNextLine()){
 				String fullLine = s.nextLine();
 				String[] line = fullLine.split(",");
@@ -46,14 +46,23 @@ public class Main {
 				if(line[SAFETY].equals("med")){
 					curLvl--;
 				}else if(line[SAFETY].equals("low")){
-					curLvl -= 2;
-				}
-				
-				if(line[PERSONS].equals("2")){
 					curLvl -= 3;
 				}
 				
-				if((line[MAINT].equals("vhigh") || line[MAINT].equals("high")) && (line[BUYING].equals("vhigh") ||  line[BUYING].equals("high")))
+				/*if(line[LUG_BOOT].equals("med") && line[DOORS].equals("2"))
+					curLvl--;*/
+				
+				if(line[PERSONS].equals("2"))
+					curLvl = 0;
+				
+				if(line[LUG_BOOT].equals("small"))
+					curLvl--;
+				
+				if((line[MAINT].equals("vhigh") || line[MAINT].equals("high")) && (line[BUYING].equals("vhigh") ||  line[BUYING].equals("high")) && !(line[MAINT].equals("high") && line[BUYING].equals("high")))
+					curLvl = 0;
+				else if((line[MAINT].equals("vhigh") || line[MAINT].equals("high")) || (line[BUYING].equals("vhigh") ||  line[BUYING].equals("high")))
+					curLvl -= 2;
+				else if((line[MAINT].equals("med") && line[BUYING].equals("med")))
 					curLvl--;
 				
 				if(curLvl < 0)
