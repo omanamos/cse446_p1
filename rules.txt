@@ -1,0 +1,5 @@
+vgood
+	persons != 2
+	safety > med
+	buying != high
+	lug_boot != small

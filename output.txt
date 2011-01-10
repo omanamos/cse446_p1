@@ -99,3 +99,36 @@ vgood={
 		4=17}
 	}
 }
+
+
+
+
+
+{unacc={
+	doors={
+		3=36, 
+		2=44, 
+		5more=35, 
+		4=36}, 
+	maint={
+		med=25, 
+		vhigh=60, 
+		high=37, 
+		low=29}, 
+	safety={
+		high=151}, 
+	buying={
+		med=32, 
+		vhigh=54, 
+		high=39, 
+		low=26}, 
+	lug_boot={
+		med=52, 
+		big=47, 
+		small=52}, 
+	persons={
+		2=109, 
+		more=26, 
+		4=16}
+	}
+}

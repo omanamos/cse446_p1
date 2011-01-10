@@ -20,6 +20,12 @@ public class Main {
 											 {"2", "4", "more"},
 											 {"small", "med", "big"},
 											 {"low", "med", "high"}};
+	public static final int[][] VALUES = {{-6, -3, 0, 6},
+										  {-6, -3, 0, 6},
+										  {-1, 0, 1, 2},
+										  {-4, 0, 4},
+										  {-8, 0, 8},
+										  {-12, -2, 10}};
 	public static final HashMap<String, HashMap<String, Integer>> ORDER_MAP	= buildOrders();
 	
 	public static void main(String[] args){
@@ -30,14 +36,15 @@ public class Main {
 		try{
 			Scanner s = new Scanner(new File("car.train"));
 			while(s.hasNextLine()){
-				String[] line = s.nextLine().split(",");
+				String fullLine = s.nextLine();
+				String[] line = fullLine.split(",");
 				String isAcc = line[line.length - 1];
 				int score = 0;
 				
 				for(int i = 0; i < line.length - 1; i++){
 					score += ORDER_MAP.get(ATTR_TO_S[i]).get(line[i]);
 				}
-				System.out.println(isAcc + " " + score);
+				System.out.println(isAcc + " " + score + " " + fullLine);
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -49,24 +56,29 @@ public class Main {
 			Scanner s = new Scanner(new File("car.train"));
 			HashMap<String, HashMap<String, HashMap<String, Integer>>> graph = new HashMap<String, HashMap<String, HashMap<String, Integer>>>();
 			while(s.hasNextLine()){
-				String[] line = s.nextLine().split(",");
+				String fullLine = s.nextLine();
+				String[] line = fullLine.split(",");
 				String isAcc = line[line.length - 1];
 				
-				if(!graph.containsKey(isAcc)){
-					graph.put(isAcc, new HashMap<String, HashMap<String, Integer>>());
-				}
-				HashMap<String, HashMap<String, Integer>> tmp = graph.get(isAcc);
-				for(int i = 0; i < line.length - 1; i++){
-					String attr = ATTR_TO_S[i];
-					if(!tmp.containsKey(attr)){
-						tmp.put(attr, new HashMap<String, Integer>());
+				if(line[5].equals("high") && isAcc.equals("unacc")){
+					if(!graph.containsKey(isAcc)){
+						graph.put(isAcc, new HashMap<String, HashMap<String, Integer>>());
 					}
-					
-					HashMap<String, Integer> cnts = tmp.get(attr);
-					if(!cnts.containsKey(line[i])){
-						cnts.put(line[i], 0);
+				
+					HashMap<String, HashMap<String, Integer>> tmp = graph.get(isAcc);
+					for(int i = 0; i < line.length - 1; i++){
+						String attr = ATTR_TO_S[i];
+						
+						if(!tmp.containsKey(attr)){
+							tmp.put(attr, new HashMap<String, Integer>());
+						}
+						
+						HashMap<String, Integer> cnts = tmp.get(attr);
+						if(!cnts.containsKey(line[i])){
+							cnts.put(line[i], 0);
+						}
+						cnts.put(line[i], cnts.get(line[i]) + 1);
 					}
-					cnts.put(line[i], cnts.get(line[i]) + 1);
 				}
 			}
 			System.out.println(graph);
@@ -80,7 +92,7 @@ public class Main {
 		for(int i = 0; i < ORDERS.length; i++){
 			HashMap<String, Integer> order = new HashMap<String, Integer>();
 			for(int n = 0; n < ORDERS[i].length; n++){
-				order.put(ORDERS[i][n], n);
+				order.put(ORDERS[i][n], VALUES[i][n]);
 			}
 			rtn.put(ATTR_TO_S[i], order);
 		}
