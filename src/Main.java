@@ -43,14 +43,9 @@ public class Main {
 				int lvl = getLvl(line[line.length - 1]);
 				int curLvl = 3;
 				
-				if(line[SAFETY].equals("med")){
-					curLvl--;
-				}else if(line[SAFETY].equals("low")){
-					curLvl -= 3;
+				if(line[SAFETY].equals("low")){
+					curLvl = 0;
 				}
-				
-				/*if(line[LUG_BOOT].equals("med") && line[DOORS].equals("2"))
-					curLvl--;*/
 				
 				if(line[PERSONS].equals("2"))
 					curLvl = 0;
@@ -64,6 +59,12 @@ public class Main {
 					curLvl -= 2;
 				else if((line[MAINT].equals("med") && line[BUYING].equals("med")))
 					curLvl--;
+				
+				if(line[DOORS].equals("2") && line[LUG_BOOT].equals("med"))
+					curLvl--;
+				if(curLvl == 3 && line[SAFETY].equals("med")){
+					curLvl--;
+				}
 				
 				if(curLvl < 0)
 					curLvl = 0;
