@@ -29,7 +29,60 @@ public class Main {
 	public static final HashMap<String, HashMap<String, Integer>> ORDER_MAP	= buildOrders();
 	
 	public static void main(String[] args){
-		count2();
+		count3();
+	}
+	
+	public static void count3(){
+		try{
+			double sum = 0;
+			double total = 0;
+			Scanner s = new Scanner(new File("car.train"));
+			while(s.hasNextLine()){
+				String fullLine = s.nextLine();
+				String[] line = fullLine.split(",");
+				int lvl = getLvl(line[line.length - 1]);
+				int curLvl = 3;
+				
+				if(line[SAFETY].equals("med")){
+					curLvl--;
+				}else if(line[SAFETY].equals("low")){
+					curLvl -= 2;
+				}
+				
+				if(line[PERSONS].equals("2")){
+					curLvl -= 3;
+				}
+				
+				if((line[MAINT].equals("vhigh") || line[MAINT].equals("high")) && (line[BUYING].equals("vhigh") ||  line[BUYING].equals("high")))
+					curLvl--;
+				
+				if(curLvl < 0)
+					curLvl = 0;
+				
+				
+				if(curLvl == lvl)
+					sum++;
+				else{
+					System.out.println(fullLine + " " + curLvl);
+					
+				}
+				total++;
+			}
+			System.out.println(sum / total);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static int getLvl(String acc){
+		if(acc.equals("unacc"))
+			return 0;
+		else if(acc.equals("acc"))
+			return 1;
+		else if(acc.equals("good"))
+			return 2;
+		else //if(acc.equals("vgood"))
+			return 3;
 	}
 	
 	public static void count2(){
@@ -60,7 +113,7 @@ public class Main {
 				String[] line = fullLine.split(",");
 				String isAcc = line[line.length - 1];
 				
-				if(line[5].equals("high") && isAcc.equals("unacc")){
+				if(line[SAFETY].equals("high") && isAcc.equals("unacc")){
 					if(!graph.containsKey(isAcc)){
 						graph.put(isAcc, new HashMap<String, HashMap<String, Integer>>());
 					}
