@@ -36,7 +36,7 @@ public class Main {
 		try{
 			double sum = 0;
 			double total = 0;
-			Scanner s = new Scanner(new File("car.test"));
+			Scanner s = new Scanner(new File("car.train"));
 			while(s.hasNextLine()){
 				String fullLine = s.nextLine();
 				String[] line = fullLine.split(",");
@@ -73,12 +73,14 @@ public class Main {
 				if(curLvl == lvl)
 					sum++;
 				else{
-					System.out.println(fullLine + " " + curLvl);
+					//System.out.println(fullLine + " " + curLvl);
 					
 				}
 				total++;
 			}
-			System.out.println(sum / total);
+			System.out.println("Num correct: " + sum);
+			System.out.println("Total: " + total);
+			System.out.println("Accuracy: " + sum / total);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
